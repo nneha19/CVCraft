@@ -1,8 +1,13 @@
 import React from 'react'
+import Resume from './Resume/Resume'
+import AI from './AI/AI'
 
 function Body() {
   return (
-    <div>Body</div>
+    <div className='h-screen flex p-12'>
+      <Resume/>
+      <AI/>
+    </div>
   )
 }
 
