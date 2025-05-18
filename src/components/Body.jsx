@@ -1,12 +1,10 @@
 import React from 'react'
-import Resume from './Resume/Resume'
-import AI from './AI/AI'
+import ResumeBuilder from './ResumeBuilder'
 
 function Body() {
   return (
-    <div className='h-screen flex p-12'>
-      <Resume/>
-      <AI/>
+    <div className='max-h-full flex p-12'>
+     <ResumeBuilder/>
     </div>
   )
 }
