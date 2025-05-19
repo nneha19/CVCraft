@@ -7,15 +7,15 @@ import ResumeBuilder from "./ResumeBuilder";
 
 
 /*Components*/
-import IntroSection from "./Resume/IntroSection";
-import Education from "./Resume/Education";
-import ExperienceSection from "./Resume/ExperienceSection";
-import Skills from "./Resume/Skills";
-import ProjectSection from "./Resume/ProjectSection";
-import Reference from './Resume/Reference';
-import Language from './Resume/Language';
-import Extra from './Resume/Extra';
-import Achievements from './Resume/Achievements';
+import IntroForm from './Forms/IntroForm';
+import EducationForm from './Forms/EducationForm'
+import ExperienceForm from './Forms/ExperienceForm'
+import SkillsForm from "./Forms/SkillsForm";
+import ProjectForm from "./Forms/ProjectForm";
+import ReferenceForm from './Forms/ReferenceForm';
+import LanguageForm from './Forms/LanguageForm';
+import ExtraForm from './Forms/ExtraForm';
+import AchievementForm from './Forms/AchievementForm';
 
 
 const steps = [
@@ -33,15 +33,15 @@ const steps = [
 
 const getStepComponent = (step) =>{
   switch(step){
-    case 0 : return <IntroSection/>; 
-    case 1 : return <Education/>;
-    case 2 : return <ExperienceSection/>;
-    case 3 : return <Skills/>;
-    case 4 : return <ProjectSection/>;
-    case 5 : return <Reference/>;
-    case 6 : return <Language/>;
-    case 7 : return <Extra/>;
-    case 8 : return <Achievements/>;
+    case 0 : return <IntroForm/>;
+    case 1 : return <EducationForm/>;
+    case 2 : return <ExperienceForm/>;
+    case 3 : return <SkillsForm/>;
+    case 4 : return <ProjectForm/>;
+    case 5 : return <ReferenceForm/>;
+    case 6 : return <LanguageForm/>;
+    case 7 : return <ExtraForm/>;
+    case 8 : return <AchievementForm/>;
   }
 }
 
