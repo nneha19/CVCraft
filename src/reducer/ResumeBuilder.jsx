@@ -9,7 +9,7 @@ export const initialSections = [
   { id: "education", component: Education,  permanent: true,},
   { id: "experience", component: Experience,  permanent: true,},
   { id: "skills", component: Skills,  permanent: true,},
-  { id: "projects", component: Projects,  permanent: false,},
+  { id: "projects", component: Projects,  permanent: true,},
 ];
 
 export const resumeReducer = (state, action) => {

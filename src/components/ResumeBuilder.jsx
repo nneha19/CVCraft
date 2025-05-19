@@ -1,6 +1,5 @@
 import { useReducer } from "react";
 import { resumeReducer, initialSections } from "../reducer/ResumeBuilder";
-import AddMore from './Resume/AddMore'
 
 import {
   DndContext,
@@ -34,7 +33,7 @@ export default function ResumeBuilder() {
 
   return (
     <div className="p-4 max-w-xl mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">Resume Sections</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-center">CUSTOMIZE YOUR RESUME</h2>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
           {sections.map((section) => {
@@ -45,7 +44,6 @@ export default function ResumeBuilder() {
           }
           
         </SortableContext>
-         <AddMore dispatch={dispatch}/>
       </DndContext>
     </div>
   );
