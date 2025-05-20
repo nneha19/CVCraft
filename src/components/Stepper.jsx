@@ -1,22 +1,21 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import ResumeBuilder from "./ResumeBuilder";
 
-
 /*Components*/
-import IntroForm from './Forms/IntroForm';
-import EducationForm from './Forms/EducationForm'
-import ExperienceForm from './Forms/ExperienceForm'
+import IntroForm from "./Forms/IntroForm";
+import EducationForm from "./Forms/EducationForm";
+import ExperienceForm from "./Forms/ExperienceForm";
 import SkillsForm from "./Forms/SkillsForm";
 import ProjectForm from "./Forms/ProjectForm";
-import ReferenceForm from './Forms/ReferenceForm';
-import LanguageForm from './Forms/LanguageForm';
-import ExtraForm from './Forms/ExtraForm';
-import AchievementForm from './Forms/AchievementForm';
-
+import ReferenceForm from "./Forms/ReferenceForm";
+import LanguageForm from "./Forms/LanguageForm";
+import ExtraForm from "./Forms/ExtraForm";
+import AchievementForm from "./Forms/AchievementForm";
+import { useResume } from "../context/ResumeContext";
 
 const steps = [
   "Introduction",
@@ -30,30 +29,56 @@ const steps = [
   "Achievements",
 ];
 
-
-const getStepComponent = (step) =>{
-  switch(step){
-    case 0 : return <IntroForm/>;
-    case 1 : return <EducationForm/>;
-    case 2 : return <ExperienceForm/>;
-    case 3 : return <SkillsForm/>;
-    case 4 : return <ProjectForm/>;
-    case 5 : return <ReferenceForm/>;
-    case 6 : return <LanguageForm/>;
-    case 7 : return <ExtraForm/>;
-    case 8 : return <AchievementForm/>;
+const getStepComponent = (step, ref, goToNext) => {
+  switch (step) {
+    case 0:
+      return <IntroForm ref={ref} goToNext={goToNext} />;
+    case 1:
+      return <EducationForm ref={ref} goToNext={goToNext} />;
+    case 2:
+      return <ExperienceForm ref={ref} goToNext={goToNext} />;
+    case 3:
+      return <SkillsForm ref={ref} goToNext={goToNext} />;
+    case 4:
+      return <ProjectForm ref={ref} goToNext={goToNext} />;
+    case 5:
+      return <ReferenceForm ref={ref} goToNext={goToNext} />;
+    case 6:
+      return <LanguageForm ref={ref} goToNext={goToNext} />;
+    case 7:
+      return <ExtraForm ref={ref} goToNext={goToNext} />;
+    case 8:
+      return <AchievementForm ref={ref} goToNext={goToNext} />;
   }
-}
+};
 
 export default function ResumeStepper() {
+  const formRef = useRef();
+  const [isStepValid, setIsStepValid] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
-
+  const { state, dispatch } = useResume();
   const isStepOptional = (step) => step >= 5;
   const isStepSkipped = (step) => skipped.has(step);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (formRef.current?.isFormValid !== undefined) {
+        setIsStepValid(formRef.current.isFormValid);
+      }
+    }, 200); // Check every 200ms (or use a better event-driven pattern)
 
-  const handleNext = () => {
-    if (activeStep >= steps.length) return; // prevent overflow
+    return () => clearInterval(interval);
+  }, [activeStep]);
+
+  useEffect(() => {
+    console.log("🔥 Updated intro state:", state);
+  }, [state]);
+
+  const handleNext = async () => {
+    if (activeStep >= steps.length) return;
+
+    const isValid = await formRef.current?.submitForm();
+    if (!isValid) return; // do not proceed if form is invalid
 
     const newSkipped = new Set(skipped);
     newSkipped.delete(activeStep);
@@ -69,7 +94,6 @@ export default function ResumeStepper() {
     setActiveStep((prev) => prev + 1);
   };
 
-
   return (
     <div className="w-full p-4 flex flex-col gap-6">
       {/* Mobile view: Only current step */}
@@ -83,7 +107,6 @@ export default function ResumeStepper() {
           </p>
         </div>
       )}
-
 
       {/* Desktop view: full stepper */}
       <div className="hidden md:block">
@@ -100,10 +123,11 @@ export default function ResumeStepper() {
                 }}
               >
                 <span
-                  className={`${activeStep === index
+                  className={`${
+                    activeStep === index
                       ? "font-bold text-blue-600"
                       : "text-gray-600"
-                    }`}
+                  }`}
                 >
                   {label}
                 </span>
@@ -114,7 +138,7 @@ export default function ResumeStepper() {
       </div>
 
       {/* Navigation Buttons */}
-      <div>{getStepComponent(activeStep)}</div>
+      <div>{getStepComponent(activeStep, formRef, handleNext)}</div>
       <div className="flex items-center justify-between gap-4">
         <Button
           disabled={activeStep === 0}
@@ -131,15 +155,19 @@ export default function ResumeStepper() {
             </Button>
           )}
           {activeStep < steps.length ? (
-      <Button onClick={handleNext} variant="contained">
-        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-      </Button>
-    ) : (
-      <>
-        <Button variant="outlined">Check ATS Score</Button>
-        <Button variant="outlined">Export as PDF</Button>
-      </>
-    )}
+            <Button
+              onClick={handleNext}
+              variant="contained"
+              disabled={!isStepValid}
+            >
+              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+            </Button>
+          ) : (
+            <>
+              <Button variant="outlined">Check ATS Score</Button>
+              <Button variant="outlined">Export as PDF</Button>
+            </>
+          )}
         </div>
       </div>
 
