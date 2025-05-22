@@ -33,6 +33,8 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
 
   return (
     <form className="lg:mt-12 lg:mb-12 sm:mt-6 sm:mb-6 w-full  mx-auto p-6 bg-white rounded-lg shadow-md flex flex-col gap-6 font-sans">
+      
+      {/* Full Name */}
       <div className="flex flex-col">
         <label className="mb-1 font-semibold text-gray-700" htmlFor="name">
           Full Name
@@ -48,6 +50,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
         )}
       </div>
 
+      {/* Email */}
       <div className="flex flex-col">
         <label className="mb-1 font-semibold text-gray-700" htmlFor="email">
           Email
@@ -70,6 +73,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
         )}
       </div>
 
+      {/* Mobile */}
       <div className="flex flex-col">
         <label className="mb-1 font-semibold text-gray-700" htmlFor="phone">
           Mobile
@@ -92,6 +96,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
         )}
       </div>
 
+      {/* Linkedin */}
       <div className="flex flex-col">
         <label className="mb-1 font-semibold text-gray-700" htmlFor="linkedin">
           LinkedIn
@@ -114,6 +119,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
         )}
       </div>
 
+      {/* Portfolio */}
       <div className="flex flex-col">
         <label className="mb-1 font-semibold text-gray-700" htmlFor="portfolio">
           Portfolio

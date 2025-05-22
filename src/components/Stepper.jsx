@@ -8,7 +8,7 @@ import ResumeBuilder from "./ResumeBuilder";
 /*Components*/
 import IntroForm from "./Forms/IntroForm";
 import EducationForm from "./Forms/EducationForm";
-import ExperienceForm from "./Forms/ExperienceForm";
+import ExperienceForm from "./Forms/ExperienceForm"
 import SkillsForm from "./Forms/SkillsForm";
 import ProjectForm from "./Forms/ProjectForm";
 import ReferenceForm from "./Forms/ReferenceForm";

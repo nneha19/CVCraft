@@ -9,12 +9,7 @@ const initialState = {
     portfolio: "",
   },
   education: [
-    {
-      institute: "",
-      course: "",
-      date: "",
-      gpa: "",
-    },
+  { institute: "", course: "", from_date: "", to_date: "", gpa: "" }, 
   ],
   skills: [
     {
