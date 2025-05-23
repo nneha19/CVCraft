@@ -147,7 +147,7 @@ const EducationForm = forwardRef(({ goToNext }, ref) => {
           </div>
 
           {/* Remove Button */}
-         {fields.length > 1 && index !== 0 && (
+      {fields.length > 1 && index !== 0 && (
       <button
         type="button"
         onClick={() => remove(index)}

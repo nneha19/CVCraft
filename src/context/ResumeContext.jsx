@@ -11,6 +11,9 @@ const initialState = {
   education: [
   { institute: "", course: "", from_date: "", to_date: "", gpa: "" }, 
   ],
+  experience: [
+    { company_name: "",position:"", pointers:[{ point: "" }], from_date:"", to_date: ""},
+  ],
   skills: [
     {
       group_title: "",
@@ -22,13 +25,6 @@ const initialState = {
       name: "",
       pointers: {},
       link: "",
-      date: "",
-    },
-  ],
-  experience: [
-    {
-      name: "",
-      pointers: {},
       date: "",
     },
   ],
