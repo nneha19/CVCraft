@@ -136,7 +136,7 @@ const EducationForm = forwardRef(({ goToNext }, ref) => {
               {...register(`education.${index}.gpa`, {
                 required: "GPA is required",
               })}
-              placeholder="GPA or Percentage"
+              placeholder="Your GPA"
               className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
             {errors.education?.[index]?.gpa && (

@@ -17,15 +17,16 @@ const initialState = {
   skills: [
     {
       group_title: "",
-      content: {},
+      content: [""],
     },
   ],
   projects: [
     {
       name: "",
-      pointers: {},
+      pointers: [{ point: "" }],
       link: "",
-      date: "",
+      from_date: "",
+      to_date: "",
     },
   ],
   language: [
@@ -37,14 +38,14 @@ const initialState = {
   extra: [
     {
       name: "",
-      pointers: {},
+      pointers: [{ point: "" }],
       date: "",
     },
   ],
   achievement: [
     {
       name: "",
-      pointers: {},
+      pointers: [{ point: "" }],
       date: "",
     },
   ],

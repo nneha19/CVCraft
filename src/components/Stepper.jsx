@@ -164,7 +164,7 @@ export default function ResumeStepper() {
             </Button>
           ) : (
             <>
-              <Button variant="outlined">Check ATS Score</Button>
+              <Button variant="outlined">Preview</Button>
               <Button variant="outlined">Export as PDF</Button>
             </>
           )}
