@@ -3,6 +3,8 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useResume } from "../../context/ResumeContext";
 
 const LanguageForm = forwardRef(({ goToNext }, ref) => {
+  const { dispatch, state } = useResume();
+
   const {
     register,
     control,
@@ -12,12 +14,9 @@ const LanguageForm = forwardRef(({ goToNext }, ref) => {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      language: [
-        {
-          name: "",
-          proficiency: "",
-        },
-      ],
+      language: state.language.length
+        ? state.language
+        : [{ name: "", proficiency: "" }],
     },
   });
 
@@ -25,8 +24,6 @@ const LanguageForm = forwardRef(({ goToNext }, ref) => {
     control,
     name: "language",
   });
-
-  const { dispatch } = useResume();
 
   useImperativeHandle(ref, () => ({
     submitForm: async () => {
@@ -44,17 +41,20 @@ const LanguageForm = forwardRef(({ goToNext }, ref) => {
   }));
 
   return (
-    <form className="w-full flex flex-col gap-6 font-sans">
+    <form className="w-full flex flex-col p-6 gap-6 font-sans">
       {fields.map((item, index) => (
         <div
           key={item.id}
-          className="bg-white p-6 rounded-lg shadow-md relative flex flex-col gap-4"
+          className="relative lg:mt-12 lg:mb-12 sm:mt-6 sm:mb-6 w-full mx-auto bg-white dark:bg-gray-900 rounded-lg  flex flex-col gap-6 font-sans"
         >
-          <h3 className="font-semibold text-lg mb-4">Language {index + 1}</h3>
+          <h3 className="font-bold text-2xl mb-2 text-gray-800 dark:text-white">
+            Language {index + 1}
+          </h3>
+          <hr className="pb-12 border-gray-400 dark:border-gray-600"></hr>
 
           {/* Name */}
           <div className="flex flex-col mb-4">
-            <label className="mb-1 font-semibold text-gray-700">
+            <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
               Language Name
             </label>
             <input
@@ -62,7 +62,7 @@ const LanguageForm = forwardRef(({ goToNext }, ref) => {
                 required: "Language Name is required",
               })}
               placeholder="Hindi, English, Chinese, etc"
-              className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
             />
             {errors.language?.[index]?.name && (
               <p className="text-red-600 mt-1 text-sm">
@@ -73,7 +73,7 @@ const LanguageForm = forwardRef(({ goToNext }, ref) => {
 
           {/* Proficiency  */}
           <div className="flex flex-col">
-            <label className="mb-1 font-semibold text-gray-700">
+            <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
               Proficiency
             </label>
             <input
@@ -84,7 +84,7 @@ const LanguageForm = forwardRef(({ goToNext }, ref) => {
                 required: "Proficiency is required",
               })}
               placeholder="Proficiency 1-10"
-              className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
             />
             {errors.language?.[index]?.proficiency && (
               <p className="text-red-600 mt-1 text-sm">

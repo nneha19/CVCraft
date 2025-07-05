@@ -3,6 +3,8 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useResume } from "../../context/ResumeContext";
 
 const SkillsForm = forwardRef(({ goToNext }, ref) => {
+  const { dispatch, state } = useResume();
+
   const {
     register,
     control,
@@ -12,12 +14,10 @@ const SkillsForm = forwardRef(({ goToNext }, ref) => {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      skills: [
-        {
-          group_title: "",
-          content: [""],
-        },
-      ],
+      skills: state.skills.map((group) => ({
+        group_title: group.group_title || "",
+        contentString: (group.content || []).join(", "),
+      })),
     },
   });
 
@@ -26,23 +26,20 @@ const SkillsForm = forwardRef(({ goToNext }, ref) => {
     name: "skills",
   });
 
-  const { dispatch } = useResume();
-
   useImperativeHandle(ref, () => ({
     submitForm: async () => {
       const valid = await trigger();
 
-      
       if (valid) {
         const values = getValues();
 
-        const transformedSkills = values.skills.map((group)=>({
-          group_title:group.group_title,
-        content: group.contentString
-          .split(",")
-          .map((skill) => skill.trim())
-          .filter((skill) => skill !== ""),
-        }))
+        const transformedSkills = values.skills.map((group) => ({
+          group_title: group.group_title,
+          content: group.contentString
+            .split(",")
+            .map((skill) => skill.trim())
+            .filter((skill) => skill !== ""),
+        }));
 
         dispatch({
           type: "UPDATE_SECTION",
@@ -55,17 +52,20 @@ const SkillsForm = forwardRef(({ goToNext }, ref) => {
   }));
 
   return (
-    <form className="w-full flex flex-col gap-6 font-sans">
+    <form className="w-full flex flex-col gap-6 p-6 font-sans">
       {fields.map((item, index) => (
         <div
           key={item.id}
-          className="bg-white p-6 rounded-lg shadow-md relative flex flex-col gap-4"
+          className="lg:mt-12 relative lg:mb-12 sm:mt-6 sm:mb-6 w-full mx-auto  bg-white dark:bg-gray-900 rounded-lg  flex flex-col gap-6 font-sans"
         >
-          <h3 className="font-semibold text-lg mb-4">Skills {index + 1}</h3>
+          <h3 className="font-bold text-2xl mb-2 text-gray-800 dark:text-white">
+            Skills {index + 1}
+          </h3>
+          <hr className="pb-12 border-gray-400 dark:border-gray-600"></hr>
 
           {/* Skills Group */}
           <div className="flex flex-col mb-4">
-            <label className="mb-1 font-semibold text-gray-700">
+            <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
               Skill Group Name
             </label>
             <input
@@ -73,7 +73,7 @@ const SkillsForm = forwardRef(({ goToNext }, ref) => {
                 required: "Skills is required",
               })}
               placeholder="Languages/Tools/Design etc"
-              className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
             />
             {errors.skills?.[index]?.group_title && (
               <p className="text-red-600 mt-1 text-sm">
@@ -84,7 +84,7 @@ const SkillsForm = forwardRef(({ goToNext }, ref) => {
 
           {/* Skills */}
           <div className="flex flex-col mb-4">
-            <label className="mb-1 font-semibold text-gray-700">
+            <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
               Skills (comma-separated)
             </label>
             <input
@@ -92,7 +92,7 @@ const SkillsForm = forwardRef(({ goToNext }, ref) => {
                 required: "Please enter at least one skill",
               })}
               placeholder="e.g. HTML, CSS, JavaScript"
-              className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
             />
             {errors.skills?.[index]?.contentString && (
               <p className="text-red-600 mt-1 text-sm">

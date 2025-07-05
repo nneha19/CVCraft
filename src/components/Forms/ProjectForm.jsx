@@ -8,6 +8,7 @@ const ProjectForm = forwardRef(({ goToNext }, ref) => {
   const {
     register,
     control,
+    watch,
     reset,
     getValues,
     trigger,
@@ -57,7 +58,7 @@ const ProjectForm = forwardRef(({ goToNext }, ref) => {
   }));
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 p-6">
       {fields.map((item, index) => (
         <ProjectItem
           key={item.id}
@@ -66,19 +67,20 @@ const ProjectForm = forwardRef(({ goToNext }, ref) => {
           control={control}
           errors={errors}
           remove={remove}
+          watch={watch}
         />
       ))}
 
       <button
         type="button"
         onClick={() =>
-          append( {
-                name: "",
-                pointers: [{ point: "" }],
-                link: "",
-                from_date: "",
-                to_date: "",
-              },)
+          append({
+            name: "",
+            pointers: [{ point: "" }],
+            link: "",
+            from_date: "",
+            to_date: "",
+          })
         }
         className="w-full py-2 px-4 bg-indigo-600 text-white cursor-pointer rounded-md hover:bg-indigo-700 transition"
       >

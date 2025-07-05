@@ -1,18 +1,19 @@
+import { Routes, Route } from "react-router-dom";
 
-import './App.css'
-import Body from './components/Body'
-import Footer from './components/Footer'
-import Navbar from './components/Navbar'
+import "./App.css";
+import ResumePreview from "./components/Preview/ResumePreview";
+import Body from "./Routes/Body";
+import Layout from "./Routes/Layout";
 
 function App() {
-
   return (
-    <div className=' bg-white dark:bg-amber-50'>
-      <Navbar/>
-      <Body/>
-      <Footer/>
-      </div>
-  )
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Body />} />
+        <Route path="preview" element={<ResumePreview />} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;

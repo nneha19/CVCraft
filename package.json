@@ -18,10 +18,13 @@
     "@hookform/resolvers": "^5.0.1",
     "@mui/material": "^7.1.0",
     "@tailwindcss/vite": "^4.1.7",
+    "html2pdf.js": "^0.10.3",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.56.4",
+    "react-router-dom": "^7.6.3",
+    "react-to-print": "^3.1.1",
     "tailwindcss": "^4.1.7",
     "yup": "^1.6.1"
   },

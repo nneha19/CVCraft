@@ -1,8 +1,7 @@
-
 import React from "react";
 import { useFieldArray } from "react-hook-form";
 
-const ProjectItem = ({ index, register, control, errors, remove }) => {
+const ProjectItem = ({ index, register, control, errors, remove, watch }) => {
   const {
     fields: pointerFields,
     append: appendPointer,
@@ -13,18 +12,23 @@ const ProjectItem = ({ index, register, control, errors, remove }) => {
   });
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md relative flex flex-col gap-4">
-      <h3 className="font-semibold text-lg mb-4">Project {index + 1}</h3>
+    <div className="lg:mt-12 relative lg:mb-12 sm:mt-6 sm:mb-6 w-full mx-auto  bg-white dark:bg-gray-900 rounded-lg  flex flex-col gap-6 font-sans">
+      <h3 className="font-bold text-2xl mb-2 text-gray-800 dark:text-white">
+        Project {index + 1}
+      </h3>
+      <hr className="pb-12 border-gray-400 dark:border-gray-600"></hr>
 
       {/* Project Name */}
       <div className="flex flex-col mb-4">
-        <label className="mb-1 font-semibold text-gray-700">Project Name</label>
+        <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
+          Project Name
+        </label>
         <input
           {...register(`projects.${index}.name`, {
             required: "Project Name is required",
           })}
           placeholder="Project Name"
-          className="border border-gray-300 rounded-md p-3"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300"
         />
         {errors.projects?.[index]?.name && (
           <p className="text-red-600 mt-1 text-sm">
@@ -33,24 +37,47 @@ const ProjectItem = ({ index, register, control, errors, remove }) => {
         )}
       </div>
 
-
       {/* Pointers */}
       <div className="flex flex-col mb-4">
-        <label className="mb-1 font-semibold text-gray-700">Pointers</label>
+        <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
+          Pointers
+        </label>
+
         {pointerFields.map((field, pIndex) => (
-          <div key={field.id} className="flex gap-2 items-center mb-2">
-            <input
-              {...register(`projects.${index}.pointers.${pIndex}.point`, {
-                required: "Pointer cannot be empty",
-              })}
-              placeholder={`Pointer ${pIndex + 1}`}
-              className="flex-1 border border-gray-300 rounded-md p-2"
-            />
+          <div key={field.id} className="flex gap-2 items-start mb-2 w-full">
+            <div className="w-full">
+              <input
+                {...register(`projects.${index}.pointers.${pIndex}.point`, {
+                  required: "Pointer cannot be empty",
+                  maxLength: {
+                    value: 140,
+                    message: "Max 140 characters allowed",
+                  },
+                })}
+                placeholder={`Pointer ${pIndex + 1}`}
+                className="border w-full border-gray-300 dark:border-gray-700 mb-1 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300"
+              />
+
+              <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                <span>
+                  {watch?.(`projects.${index}.pointers.${pIndex}.point`)
+                    ?.length || 0}
+                  /140
+                </span>
+                {errors.projects?.[index]?.pointers?.[pIndex]?.point && (
+                  <p className="text-red-600 text-xs">
+                    {errors.projects[index].pointers[pIndex].point.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
             {pointerFields.length > 1 && pIndex !== 0 ? (
               <button
                 type="button"
                 onClick={() => removePointer(pIndex)}
-                className="text-red-500 hover:text-red-700 cursor-pointer font-bold"
+                className="text-red-500 hover:text-red-700 cursor-pointer font-bold text-lg"
+                title="Remove"
               >
                 ✕
               </button>
@@ -59,18 +86,22 @@ const ProjectItem = ({ index, register, control, errors, remove }) => {
             )}
           </div>
         ))}
+
         <button
           type="button"
           onClick={() => appendPointer({ point: "" })}
-          className="text-sm text-indigo-600 hover:underline mt-2 cursor-pointer font-semibold"
+          className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline mt-2 cursor-pointer font-semibold"
         >
           + Add Pointer
         </button>
       </div>
 
-       {/* Project Link */}
+      {/* Project Link */}
       <div className="flex flex-col">
-        <label className="mb-1 font-semibold text-gray-700" htmlFor="link">
+        <label
+          className="mb-1 font-semibold text-gray-700 dark:text-gray-200"
+          htmlFor="link"
+        >
           Project Link
         </label>
         <input
@@ -85,7 +116,7 @@ const ProjectItem = ({ index, register, control, errors, remove }) => {
             },
           })}
           placeholder="https://yourprojectlink.com"
-          className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
         {errors.projects?.[index]?.link && (
           <p className="text-red-600 mt-1 text-sm">
@@ -96,13 +127,15 @@ const ProjectItem = ({ index, register, control, errors, remove }) => {
 
       {/* Start Date */}
       <div className="flex flex-col mb-4">
-        <label className="mb-1 font-semibold text-gray-700">Start Date</label>
+        <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
+          Start Date
+        </label>
         <input
           type="month"
           {...register(`projects.${index}.from_date`, {
             required: "Start Date is required",
           })}
-          className="border border-gray-300 rounded-md p-3"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300"
         />
         {errors.projects?.[index]?.from_date && (
           <p className="text-red-600 mt-1 text-sm">
@@ -113,13 +146,15 @@ const ProjectItem = ({ index, register, control, errors, remove }) => {
 
       {/* End Date */}
       <div className="flex flex-col mb-4">
-        <label className="mb-1 font-semibold text-gray-700">End Date</label>
+        <label className="mb-1 font-semibold text-gray-700 dark:text-gray-200">
+          End Date
+        </label>
         <input
           type="month"
           {...register(`projects.${index}.to_date`, {
             required: "End Date is required",
           })}
-          className="border border-gray-300 rounded-md p-3"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300"
         />
         {errors.projects?.[index]?.to_date && (
           <p className="text-red-600 mt-1 text-sm">

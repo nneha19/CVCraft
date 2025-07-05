@@ -1,5 +1,5 @@
 import { act, createContext, useContext, useReducer } from "react";
-
+import { initialSections } from "../config/dragSection";
 const initialState = {
   intro: {
     name: "",
@@ -9,10 +9,16 @@ const initialState = {
     portfolio: "",
   },
   education: [
-  { institute: "", course: "", from_date: "", to_date: "", gpa: "" }, 
+    { institute: "", course: "", from_date: "", to_date: "", gpa: "" },
   ],
   experience: [
-    { company_name: "",position:"", pointers:[{ point: "" }], from_date:"", to_date: ""},
+    {
+      company_name: "",
+      position: "",
+      pointers: [{ point: "" }],
+      from_date: "",
+      to_date: "",
+    },
   ],
   skills: [
     {
@@ -56,6 +62,13 @@ const initialState = {
       contact: "",
     },
   ],
+  sectionVisibility: {
+    reference: true,
+    language: true,
+    extra: true,
+  },
+
+  sectionOrder: initialSections.map((s) => s.id),
 };
 
 const resumeContext = createContext();
@@ -66,10 +79,7 @@ const resumeReducer = (state, action) => {
     case "UPDATE_SECTION":
       return {
         ...state,
-        [action.payload.section]: {
-          ...state[action.payload.section],
-          ...action.payload.data,
-        },
+        [action.payload.section]: action.payload.data,
       };
 
     case "UPDATE_FIELD":
@@ -107,12 +117,27 @@ const resumeReducer = (state, action) => {
         ],
       };
 
+    case "SET_SECTION_VISIBILITY":
+      return {
+        ...state,
+        sectionVisibility: {
+          ...state.sectionVisibility,
+          [action.payload.section]: action.payload.visible,
+        },
+      };
+
     case "REMOVE_ITEM":
       return {
         ...state,
         [action.payload.section]: state[action.payload.section].filter(
           (_, i) => i !== action.payload.index
         ),
+      };
+
+    case "SET_SECTION_ORDER":
+      return {
+        ...state,
+        sectionOrder: action.payload,
       };
 
     default:

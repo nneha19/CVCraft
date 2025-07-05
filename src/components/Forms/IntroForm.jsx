@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useResume } from "../../context/ResumeContext";
 
 const IntroForm = forwardRef(({ onSubmit }, ref) => {
+  const { dispatch, state } = useResume();
+
   const {
     register,
     getValues,
@@ -10,8 +12,15 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
     formState: { errors, isValid },
   } = useForm({
     mode: "onChange", // triggers validation on each change
+    defaultValues: state.intro || {
+      // fallback default
+      name: "",
+      email: "",
+      phone: "",
+      linkedin: "",
+      portfolio: "",
+    },
   });
-  const { dispatch } = useResume();
 
   useImperativeHandle(ref, () => ({
     submitForm: async () => {
@@ -32,18 +41,20 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
   }));
 
   return (
-    <form className="lg:mt-12 lg:mb-12 sm:mt-6 sm:mb-6 w-full  mx-auto p-6 bg-white rounded-lg shadow-md flex flex-col gap-6 font-sans">
-      
+    <form className="lg:mt-12 lg:mb-12 sm:mt-6 sm:mb-6 w-full mx-auto p-6 bg-white dark:bg-gray-900 rounded-lg  flex flex-col gap-6 font-sans">
       {/* Full Name */}
       <div className="flex flex-col">
-        <label className="mb-1 font-semibold text-gray-700" htmlFor="name">
+        <label
+          className="mb-1 font-semibold text-gray-700 dark:text-gray-200"
+          htmlFor="name"
+        >
           Full Name
         </label>
         <input
           id="name"
           {...register("name", { required: "Name is required" })}
           placeholder="Your full name"
-          className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
         {errors.name && (
           <p className="text-red-600 mt-1 text-sm">{errors.name.message}</p>
@@ -52,7 +63,10 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
 
       {/* Email */}
       <div className="flex flex-col">
-        <label className="mb-1 font-semibold text-gray-700" htmlFor="email">
+        <label
+          className="mb-1 font-semibold text-gray-700 dark:text-gray-200"
+          htmlFor="email"
+        >
           Email
         </label>
         <input
@@ -66,7 +80,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
             },
           })}
           placeholder="you@example.com"
-          className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
         {errors.email && (
           <p className="text-red-600 mt-1 text-sm">{errors.email.message}</p>
@@ -75,7 +89,10 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
 
       {/* Mobile */}
       <div className="flex flex-col">
-        <label className="mb-1 font-semibold text-gray-700" htmlFor="phone">
+        <label
+          className="mb-1 font-semibold text-gray-700 dark:text-gray-200"
+          htmlFor="phone"
+        >
           Mobile
         </label>
         <input
@@ -89,7 +106,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
             },
           })}
           placeholder="+91 9876543210"
-          className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
         {errors.phone && (
           <p className="text-red-600 mt-1 text-sm">{errors.phone.message}</p>
@@ -98,7 +115,10 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
 
       {/* Linkedin */}
       <div className="flex flex-col">
-        <label className="mb-1 font-semibold text-gray-700" htmlFor="linkedin">
+        <label
+          className="mb-1 font-semibold text-gray-700 dark:text-gray-200"
+          htmlFor="linkedin"
+        >
           LinkedIn
         </label>
         <input
@@ -112,7 +132,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
             },
           })}
           placeholder="https://linkedin.com/in/username"
-          className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
         {errors.linkedin && (
           <p className="text-red-600 mt-1 text-sm">{errors.linkedin.message}</p>
@@ -121,7 +141,10 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
 
       {/* Portfolio */}
       <div className="flex flex-col">
-        <label className="mb-1 font-semibold text-gray-700" htmlFor="portfolio">
+        <label
+          className="mb-1 font-semibold text-gray-700 dark:text-gray-200"
+          htmlFor="portfolio"
+        >
           Portfolio
         </label>
         <input
@@ -136,7 +159,7 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
             },
           })}
           placeholder="https://yourportfolio.com"
-          className="border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+          className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
         {errors.portfolio && (
           <p className="text-red-600 mt-1 text-sm">

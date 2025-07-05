@@ -8,6 +8,7 @@ const ExtraForm = forwardRef(({ goToNext }, ref) => {
   const {
     register,
     control,
+    watch,
     reset,
     getValues,
     trigger,
@@ -55,7 +56,7 @@ const ExtraForm = forwardRef(({ goToNext }, ref) => {
   }));
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 p-6">
       {fields.map((item, index) => (
         <ExtraItem
           key={item.id}
@@ -64,6 +65,7 @@ const ExtraForm = forwardRef(({ goToNext }, ref) => {
           control={control}
           errors={errors}
           remove={remove}
+          watch={watch}
         />
       ))}
 

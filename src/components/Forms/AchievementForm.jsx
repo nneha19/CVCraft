@@ -8,6 +8,7 @@ const AchievementForm = forwardRef(({ goToNext }, ref) => {
   const {
     register,
     control,
+    watch,
     reset,
     getValues,
     trigger,
@@ -55,7 +56,7 @@ const AchievementForm = forwardRef(({ goToNext }, ref) => {
   }));
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6  p-6">
       {fields.map((item, index) => (
         <AchievementItem
           key={item.id}
@@ -63,6 +64,7 @@ const AchievementForm = forwardRef(({ goToNext }, ref) => {
           register={register}
           control={control}
           errors={errors}
+          watch={watch}
           remove={remove}
         />
       ))}
