@@ -50,3 +50,20 @@ npm install
 
 # Start development server
 npm run dev
+``` 
+<br>
+<br>
+
+## 🔗 Live Demo
+
+👉 [thecvcraft.vercel.app](https://thecvcraft.vercel.app)
+
+<br>
+<br>
+
+
+## 👩‍💻 Author
+
+Built with 💙 by [Neha Ghariyal](https://github.com/nneha19)
+
+
