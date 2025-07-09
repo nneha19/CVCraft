@@ -13,361 +13,196 @@ const formatURL = (url) =>
     ? url
     : `https://${url}`;
 
+const sectionStyles = {
+  heading: {
+    fontSize: "15px",
+    fontWeight: "600",
+    borderBottom: "1px solid #ccc",
+    paddingBottom: "4px",
+    marginBottom: "4px",
+  },
+  subheading: {
+    fontSize: "13px",
+    fontWeight: "500",
+  },
+  body: {
+    fontSize: "12.5px",
+    color: "#333",
+    lineHeight: 1.6,
+  },
+  date: {
+    fontSize: "12px",
+    color: "#666",
+  },
+  list: {
+    paddingLeft: "1.25rem",
+    margin: 0,
+  },
+  listItem: {
+    position: "relative",
+    marginTop: "0.25rem",
+    paddingLeft: "1rem",
+    fontSize: "12.5px",
+    lineHeight: 1.6,
+    wordBreak: "break-word",
+    whiteSpace: "pre-wrap",
+    overflowWrap: "anywhere",
+  },
+  bullet: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    fontWeight: "bold",
+  },
+};
+
 export const sectionRenderers = {
   intro: (state) => (
     <div key="intro" style={{ textAlign: "center", paddingBottom: "1rem" }}>
-      <h1 style={{ fontSize: "24px", fontWeight: "600", marginBottom: "4px" }}>
-        {state.intro.name}
-      </h1>
-      <p style={{ fontSize: "12px", color: "#444" }}>
+      <h1 style={{ fontSize: "22px", fontWeight: "600", marginBottom: "4px" }}>{state.intro.name}</h1>
+      <p style={sectionStyles.body}>
         {state.intro.phone} | {state.intro.email}
         {state.intro.linkedin && (
-          <>
-            {" "}
-            | <a
-  href={formatURL(state.intro.linkedin)}
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{ color: "#2563eb", textDecoration: "underline" }}
->
-  LinkedIn
-</a>
-          </>
+          <> | <a href={formatURL(state.intro.linkedin)} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb" }}>LinkedIn</a></>
         )}
         {state.intro.portfolio && (
-          <>
-            {" "}
-            | <a
-  href={formatURL(state.intro.portfolio)}
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{ color: "#2563eb", textDecoration: "underline" }}
->
-  Portfolio
-</a>
-          </>
+          <> | <a href={formatURL(state.intro.portfolio)} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb" }}>Portfolio</a></>
         )}
       </p>
     </div>
   ),
 
-  experience: (state) =>
-    state.experience.length > 0 && (
-      <section key="experience" style={{ marginTop: "1.5rem" }}>
-        <h2
-          style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
-          }}
-        >
-          Experience
-        </h2>
-        {state.experience.map((exp, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "0.5rem",
-            }}
-          >
-            <div>
-              <p>
-                <strong>{exp.company_name}</strong> | {exp.position}
-              </p>
-              <ul style={{ listStyle: "disc", paddingLeft: "1.5rem" }}>
-                {exp.pointers.map(
-                  (pt, j) =>
-                    pt.point && (
-                      <li
-                        key={j}
-                        style={{
-                          wordBreak: "break-word",
-                          whiteSpace: "pre-wrap",
-                          overflowWrap: "anywhere",
-                        }}
-                      >
-                        {pt.point}
-                      </li>
-                    )
-                )}
-              </ul>
-            </div>
-            <span style={{ fontSize: "12px" }}>
-              {formatDate(exp.from_date)} - {formatDate(exp.to_date)}
-            </span>
-          </div>
-        ))}
-      </section>
-    ),
-
-  education: (state) =>
-    state.education.length > 0 && (
-      <section key="education" style={{ marginTop: "1.5rem" }}>
-        <h2
-          style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
-          }}
-        >
-          Education
-        </h2>
-        {state.education.map((edu, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "0.5rem",
-            }}
-          >
-            <div>
-              <p>
-                {edu.institute} | {edu.course} | {edu.gpa}
-              </p>
-              <p
-                style={{ fontSize: "12px", color: "#555", paddingLeft: "4px" }}
-              >
-                {edu.institute}
-              </p>
-            </div>
-            <span style={{ fontSize: "12px" }}>
-              {" "}
-              {formatDate(edu.from_date)} - {formatDate(edu.to_date)}
-            </span>
-          </div>
-        ))}
-      </section>
-    ),
-
-  skills: (state) =>
-    state.skills.length > 0 && (
-      <section key="skills" style={{ marginTop: "1.5rem" }}>
-        <h2
-          style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
-          }}
-        >
-          Skills
-        </h2>
-        {state.skills.map((skill, i) => (
-          <div key={i} style={{ marginTop: "0.25rem" }}>
-            <p style={{ fontWeight: "500", fontSize: "14px" }}>
-              {skill.group_title}
-            </p>
-            <p style={{ paddingLeft: "1rem", fontSize: "12px", color: "#333" }}>
-              {skill.content.join(", ")}
-            </p>
-          </div>
-        ))}
-      </section>
-    ),
-
-projects: (state) =>
-  state.projects.length > 0 && (
-    <section key="projects" style={{ marginTop: "1.5rem" }}>
-      <h2
-        style={{
-          fontWeight: "600",
-          borderBottom: "1px solid #ccc",
-          paddingBottom: "4px",
-        }}
-      >
-        Projects
-      </h2>
-      {state.projects.map((proj, i) => (
-        <div
-          key={i}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "0.5rem",
-          }}
-        >
+  experience: (state) => state.experience.length > 0 && (
+    <section key="experience" style={{ marginTop: "1.5rem" }}>
+      <h2 style={sectionStyles.heading}>Experience</h2>
+      {state.experience.map((exp, i) => (
+        <div key={i} style={{ display: "flex", justifyContent: "space-between", marginTop: "0.5rem" }}>
           <div>
-            <p style={{ fontWeight: "400" }}>
-              {proj.name}{" "} |&nbsp; 
-              {proj.link && (
-                <a
-                  href={formatURL(proj.link)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#2563eb", textDecoration: "underline" }}
-                >
-                  Link
-                </a>
-              )}
-            </p>
-            <ul style={{ listStyle: "disc", paddingLeft: "1.5rem" }}>
-              {proj.pointers.map(
-                (pt, j) =>
-                  pt.point && (
-                    <li
-                      key={j}
-                      style={{
-                        wordBreak: "break-word",
-                        whiteSpace: "pre-wrap",
-                        overflowWrap: "anywhere",
-                      }}
-                    >
-                      {pt.point}
-                    </li>
-                  )
-              )}
+            <p style={sectionStyles.subheading}><strong>{exp.company_name}</strong> | {exp.position}</p>
+            <ul style={sectionStyles.list}>
+              {exp.pointers.map((pt, j) => pt.point && (
+                <li key={j} style={sectionStyles.listItem}>
+                  <span style={sectionStyles.bullet}>•</span>{pt.point}
+                </li>
+              ))}
             </ul>
           </div>
-          <span style={{ fontSize: "12px" }}>
-            {formatDate(proj.from_date)} - {formatDate(proj.to_date)}
-          </span>
+          <span style={sectionStyles.date}>{formatDate(exp.from_date)} - {formatDate(exp.to_date)}</span>
         </div>
       ))}
     </section>
   ),
 
-  achievement: (state) =>
-    state.achievement.some(
-      (ach) => ach.name || ach.pointers?.some((p) => p.point)
-    ) && (
-      <section style={{ marginTop: "1.5rem" }} key="achievement">
-        <h2
-          style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
-          }}
-        >
-          Achievements
-        </h2>
-        {state.achievement.map((ach, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "0.5rem",
-            }}
-          >
-            <div>
-              <p style={{ fontWeight: "500" }}>{ach.name}</p>
-              <ul style={{ listStyle: "disc", paddingLeft: "1.5rem" }}>
-                {ach.pointers.map(
-                  (pt, j) =>
-                    pt.point && (
-                      <li
-                        key={j}
-                        style={{
-                          wordBreak: "break-word",
-                          whiteSpace: "pre-wrap",
-                          overflowWrap: "anywhere",
-                        }}
-                      >
-                        {pt.point}
-                      </li>
-                    )
-                )}
-              </ul>
-            </div>
-            <span style={{ fontSize: "12px" }}>{formatDate(ach.date)}</span>
+  education: (state) => state.education.length > 0 && (
+    <section key="education" style={{ marginTop: "1.5rem" }}>
+      <h2 style={sectionStyles.heading}>Education</h2>
+      {state.education.map((edu, i) => (
+        <div key={i} style={{ display: "flex", justifyContent: "space-between", marginTop: "0.5rem" }}>
+          <div>
+            <p style={sectionStyles.subheading}>{edu.institute} | {edu.course} | GPA - {edu.gpa}</p>
           </div>
-        ))}
-      </section>
-    ),
+          <span style={sectionStyles.date}>{formatDate(edu.from_date)} - {formatDate(edu.to_date)}</span>
+        </div>
+      ))}
+    </section>
+  ),
 
-  extra: (state) =>
-    state.extra.some(
-      (ext) => ext.name || ext.pointers?.some((p) => p.point)
-    ) && (
-      <section key="extra" style={{ marginTop: "1.5rem" }}>
-        <h2
-          style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
-          }}
-        >
-          Extra
-        </h2>
-        {state.extra.map((ext, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "0.5rem",
-            }}
-          >
-            <div>
-              <p style={{ fontWeight: "500" }}>{ext.name}</p>
-              <ul style={{ listStyle: "disc", paddingLeft: "1.5rem" }}>
-                {ext.pointers.map(
-                  (pt, j) =>
-                    pt.point && (
-                      <li
-                        key={j}
-                        style={{
-                          wordBreak: "break-word",
-                          whiteSpace: "pre-wrap",
-                          overflowWrap: "anywhere",
-                        }}
-                      >
-                        {pt.point}
-                      </li>
-                    )
-                )}
-              </ul>
-            </div>
-            <span style={{ fontSize: "12px" }}>{formatDate(ext.date)}</span>
+skills: (state) => state.skills.length > 0 && (
+  <section key="skills" style={{ marginTop: "1.5rem" }}>
+    <h2 style={sectionStyles.heading}>Skills</h2>
+    {state.skills.map((skill, i) => (
+      <div key={i} style={{ marginTop: "0.5rem" }}>
+        <p style={sectionStyles.subheading}>{skill.group_title}</p>
+        <p style={{ ...sectionStyles.body, paddingLeft: "1rem" }}>
+          - {skill.content.join(", ")}
+        </p>
+      </div>
+    ))}
+  </section>
+),
+
+
+  projects: (state) => state.projects.length > 0 && (
+    <section key="projects" style={{ marginTop: "1.5rem" }}>
+      <h2 style={sectionStyles.heading}>Projects</h2>
+      {state.projects.map((proj, i) => (
+        <div key={i} style={{ display: "flex", justifyContent: "space-between", marginTop: "0.5rem" }}>
+          <div>
+            <p style={sectionStyles.subheading}>{proj.name} | {proj.link && <a href={formatURL(proj.link)} target="_blank" rel="noopener noreferrer" style={{ color: "#2563eb" }}>Link</a>}</p>
+            <ul style={sectionStyles.list}>
+              {proj.pointers.map((pt, j) => pt.point && (
+                <li key={j} style={sectionStyles.listItem}>
+                  <span style={sectionStyles.bullet}>•</span>{pt.point}
+                </li>
+              ))}
+            </ul>
           </div>
-        ))}
-      </section>
-    ),
+          <span style={sectionStyles.date}>{formatDate(proj.from_date)} - {formatDate(proj.to_date)}</span>
+        </div>
+      ))}
+    </section>
+  ),
 
-  reference: (state) =>
-    state.reference.length > 0 && (
-      <section key="reference" style={{ marginTop: "1.5rem" }}>
-        <h2
-          style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
-          }}
-        >
-          Reference
-        </h2>
-        {state.reference.map((ref, i) => (
-          <p key={i}>
-            {ref.name} | {ref.position} | {ref.contact}
-          </p>
-        ))}
-      </section>
-    ),
-
-  language: (state) =>
-    state.language.length > 0 && (
-      <section key="language" style={{ marginTop: "1.5rem" }}>
-        <h2
-          style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
-          }}
-        >
-          Language
-        </h2>
-        {state.language.map((lang, i) => (
-          <div key={i}>
-            <span>{lang.name} | </span>
-            <span
-              style={{ fontSize: "12px", color: "#560", paddingLeft: "4px" }}
-            >
-              Proficiency - {lang.proficiency}
-            </span>
+  achievement: (state) => state.achievement.some((a) => a.name || a.pointers?.some(p => p.point)) && (
+    <section key="achievement" style={{ marginTop: "1.5rem" }}>
+      <h2 style={sectionStyles.heading}>Achievements</h2>
+      {state.achievement.map((ach, i) => (
+        <div key={i} style={{ display: "flex", justifyContent: "space-between", marginTop: "0.5rem" }}>
+          <div>
+            <p style={sectionStyles.subheading}>{ach.name}</p>
+            <ul style={sectionStyles.list}>
+              {ach.pointers.map((pt, j) => pt.point && (
+                <li key={j} style={sectionStyles.listItem}>
+                  <span style={sectionStyles.bullet}>•</span>{pt.point}
+                </li>
+              ))}
+            </ul>
           </div>
-        ))}
-      </section>
-    ),
+          <span style={sectionStyles.date}>{formatDate(ach.date)}</span>
+        </div>
+      ))}
+    </section>
+  ),
+
+  extra: (state) => state.extra.some((ext) => ext.name || ext.pointers?.some(p => p.point)) && (
+    <section key="extra" style={{ marginTop: "1.5rem" }}>
+      <h2 style={sectionStyles.heading}>Extra</h2>
+      {state.extra.map((ext, i) => (
+        <div key={i} style={{ display: "flex", justifyContent: "space-between", marginTop: "0.5rem" }}>
+          <div>
+            <p style={sectionStyles.subheading}>{ext.name}</p>
+            <ul style={sectionStyles.list}>
+              {ext.pointers.map((pt, j) => pt.point && (
+                <li key={j} style={sectionStyles.listItem}>
+                  <span style={sectionStyles.bullet}>•</span>{pt.point}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <span style={sectionStyles.date}>{formatDate(ext.date)}</span>
+        </div>
+      ))}
+    </section>
+  ),
+
+  reference: (state) => state.reference.length > 0 && (
+    <section key="reference" style={{ marginTop: "1.5rem" }}>
+      <h2 style={sectionStyles.heading}>Reference</h2>
+      {state.reference.map((ref, i) => (
+        <p key={i} style={sectionStyles.body}>{ref.name} | {ref.profession} | {ref.contact}</p>
+      ))}
+    </section>
+  ),
+
+  language: (state) => state.language.length > 0 && (
+    <section key="language" style={{ marginTop: "1.5rem" }}>
+      <h2 style={sectionStyles.heading}>Language</h2>
+      {state.language.map((lang, i) => (
+        <div key={i}>
+          <span style={sectionStyles.subheading}>{lang.name} | </span>
+          <span style={{ ...sectionStyles.date, paddingLeft: "6px" }}>Proficiency - {lang.proficiency}</span>
+        </div>
+      ))}
+    </section>
+  ),
 };
