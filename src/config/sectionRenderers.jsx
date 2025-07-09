@@ -8,6 +8,11 @@ const formatDate = (dateStr) => {
   return `${month}, ${year}`;
 };
 
+const formatURL = (url) =>
+  url?.startsWith("http://") || url?.startsWith("https://")
+    ? url
+    : `https://${url}`;
+
 export const sectionRenderers = {
   intro: (state) => (
     <div key="intro" style={{ textAlign: "center", paddingBottom: "1rem" }}>
@@ -18,28 +23,28 @@ export const sectionRenderers = {
         {state.intro.phone} | {state.intro.email}
         {state.intro.linkedin && (
           <>
-            {" | "}
-            <a
-              href={state.intro.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#0000EE", textDecoration: "none" }}
-            >
-              LinkedIn
-            </a>
+            {" "}
+            | <a
+  href={formatURL(state.intro.linkedin)}
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ color: "#2563eb", textDecoration: "underline" }}
+>
+  LinkedIn
+</a>
           </>
         )}
         {state.intro.portfolio && (
           <>
-            {" | "}
-            <a
-              href={state.intro.portfolio}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#0000EE", textDecoration: "none" }}
-            >
-              Portfolio
-            </a>
+            {" "}
+            | <a
+  href={formatURL(state.intro.portfolio)}
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{ color: "#2563eb", textDecoration: "underline" }}
+>
+  Portfolio
+</a>
           </>
         )}
       </p>
@@ -162,66 +167,66 @@ export const sectionRenderers = {
       </section>
     ),
 
-  projects: (state) =>
-    state.projects.length > 0 && (
-      <section key="projects" style={{ marginTop: "1.5rem" }}>
-        <h2
+projects: (state) =>
+  state.projects.length > 0 && (
+    <section key="projects" style={{ marginTop: "1.5rem" }}>
+      <h2
+        style={{
+          fontWeight: "600",
+          borderBottom: "1px solid #ccc",
+          paddingBottom: "4px",
+        }}
+      >
+        Projects
+      </h2>
+      {state.projects.map((proj, i) => (
+        <div
+          key={i}
           style={{
-            fontWeight: "600",
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "4px",
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "0.5rem",
           }}
         >
-          Projects
-        </h2>
-        {state.projects.map((proj, i) => (
-          <div
-            key={i}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginTop: "0.5rem",
-            }}
-          >
-            <div>
-              <p style={{ fontWeight: "500" }}>
-                {proj.name}{" "}
-                {proj.link && (
-                  <a
-                    href={proj.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ color: "blue", textDecoration: "underline" }}
-                  >
-                    | {proj.link}
-                  </a>
-                )}
-              </p>
-              <ul style={{ listStyle: "disc", paddingLeft: "1.5rem" }}>
-                {proj.pointers.map(
-                  (pt, j) =>
-                    pt.point && (
-                      <li
-                        key={j}
-                        style={{
-                          wordBreak: "break-word",
-                          whiteSpace: "pre-wrap",
-                          overflowWrap: "anywhere",
-                        }}
-                      >
-                        {pt.point}
-                      </li>
-                    )
-                )}
-              </ul>
-            </div>
-            <span style={{ fontSize: "12px" }}>
-              {formatDate(proj.from_date)} - {formatDate(proj.to_date)}
-            </span>
+          <div>
+            <p style={{ fontWeight: "400" }}>
+              {proj.name}{" "} |&nbsp; 
+              {proj.link && (
+                <a
+                  href={formatURL(proj.link)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#2563eb", textDecoration: "underline" }}
+                >
+                  Link
+                </a>
+              )}
+            </p>
+            <ul style={{ listStyle: "disc", paddingLeft: "1.5rem" }}>
+              {proj.pointers.map(
+                (pt, j) =>
+                  pt.point && (
+                    <li
+                      key={j}
+                      style={{
+                        wordBreak: "break-word",
+                        whiteSpace: "pre-wrap",
+                        overflowWrap: "anywhere",
+                      }}
+                    >
+                      {pt.point}
+                    </li>
+                  )
+              )}
+            </ul>
           </div>
-        ))}
-      </section>
-    ),
+          <span style={{ fontSize: "12px" }}>
+            {formatDate(proj.from_date)} - {formatDate(proj.to_date)}
+          </span>
+        </div>
+      ))}
+    </section>
+  ),
 
   achievement: (state) =>
     state.achievement.some(

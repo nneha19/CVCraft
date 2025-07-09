@@ -11,7 +11,7 @@ import Extra from "../components/Draggable/Extra";
 export const initialSections = [
   { id: "intro", component: Intro, permanent: true },
   { id: "education", component: Education, permanent: true },
-  { id: "experience", component: Experience, permanent: true },
+  { id: "experience", component: Experience, permanent: false },
   { id: "skills", component: Skills, permanent: true },
   { id: "projects", component: Projects, permanent: true },
   { id: "reference", component: Reference, permanent: false },

@@ -132,8 +132,15 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
             },
           })}
           placeholder="https://linkedin.com/in/username"
+          onBlur={(e) => {
+            const val = e.target.value.trim();
+            if (val && !/^https?:\/\//i.test(val)) {
+              e.target.value = `https://${val}`;
+            }
+          }}
           className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
+
         {errors.linkedin && (
           <p className="text-red-600 mt-1 text-sm">{errors.linkedin.message}</p>
         )}
@@ -159,8 +166,15 @@ const IntroForm = forwardRef(({ onSubmit }, ref) => {
             },
           })}
           placeholder="https://yourportfolio.com"
+          onBlur={(e) => {
+            const val = e.target.value.trim();
+            if (val && !/^https?:\/\//i.test(val)) {
+              e.target.value = `https://${val}`;
+            }
+          }}
           className="border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-300 "
         />
+
         {errors.portfolio && (
           <p className="text-red-600 mt-1 text-sm">
             {errors.portfolio.message}

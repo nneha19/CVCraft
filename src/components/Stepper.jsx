@@ -59,11 +59,12 @@ export default function ResumeStepper() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const { state, dispatch } = useResume();
-  const isStepOptional = (step) => step >= 5;
+  const isStepOptional = (step) => [2, 5, 6, 7].includes(step);
   const isStepSkipped = (step) => skipped.has(step);
   const navigate = useNavigate();
 
   const stepToSectionId = {
+    2: "experience",
     5: "reference",
     6: "language",
     7: "extra",
@@ -192,7 +193,7 @@ export default function ResumeStepper() {
         </Button>
 
         <div className="flex gap-2 ml-auto">
-          {isStepOptional(activeStep) && activeStep < steps.length - 1 && (
+       {isStepOptional(activeStep) && (
             <Button color="inherit" onClick={handleSkip}>
               Skip
             </Button>
