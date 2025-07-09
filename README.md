@@ -1,12 +1,52 @@
-# React + Vite
+# 📝 CVCraft – Resume Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Create stunning, customizable resumes in minutes with **CVCraft**, a modern React-based resume builder. Fill out structured forms, reorder sections with drag-and-drop, toggle visibility, and export to PDF — all with a responsive UI and dark mode support.
+<br>
+<br>
+![image](https://github.com/user-attachments/assets/afa7fc5f-b534-4b2d-9cd3-23a43dba4c96)
 
-Currently, two official plugins are available:
+<br>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Features
+
+- 📄 Section-Based Resume Builder
+- 🧲 Drag & Drop Section Reordering
+- 🌙 Dark Mode Support
+- ✅ Form Validation using React Hook Form + Yup
+- 📤 Export to PDF (html2pdf.js / react-to-print)
+- 👁️ Live Preview of Resume
+- 💬 Pointer Inputs with Character Limits
+- ⚡ Clean and Modular Codebase
+
+<br>
+<br>
+
+## 🛠 Tech Stack
+
+| Feature        | Library/Tool              |
+|----------------|---------------------------|
+| Frontend       | React + Vite              |
+| Styling        | Tailwind CSS              |
+| State          | Context API + useReducer  |
+| Forms          | react-hook-form + yup     |
+| Drag & Drop    | DnD Kit                   |
+| PDF Export     | html2pdf.js, react-to-print |
+| Icons          | Lucide, Heroicons         |
+
+<br>
+<br>
+
+## 🚀 Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/nneha19/CVCraft.git
+cd CVCraft
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
